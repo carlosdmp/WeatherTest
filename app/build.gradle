@@ -1,0 +1,83 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.cdmp.weatherapp"
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug{
+            buildConfigField 'String', "ApiKey", Weather_ApiKey
+            resValue 'string', "api_key", Weather_ApiKey
+        }
+        release {
+            buildConfigField 'String', "ApiKey", Weather_ApiKey
+            resValue 'string', "api_key", Weather_ApiKey
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+
+    //android
+    implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.viewmodelVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
+    implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
+    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
+    //kotlin coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
+
+    //koin
+    implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
+
+    //Arrow
+    implementation "org.koin:koin-android:$rootProject.koinVersion"
+    implementation "io.arrow-kt:arrow-core-data:$rootProject.arrow_version"
+    implementation "io.arrow-kt:arrow-core-extensions:$rootProject.arrow_version"
+    implementation "io.arrow-kt:arrow-syntax:$rootProject.arrow_version"
+    implementation "io.arrow-kt:arrow-typeclasses:$rootProject.arrow_version"
+    implementation "io.arrow-kt:arrow-extras-data:$rootProject.arrow_version"
+    implementation "io.arrow-kt:arrow-extras-extensions:$rootProject.arrow_version"
+    kapt "io.arrow-kt:arrow-meta:$rootProject.arrow_version"
+
+    //http
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+
+    //unit testing
+    testImplementation 'junit:junit:4.12'
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation group: 'androidx.arch.core', name: 'core-testing', version: '2.0.1'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesVersion"
+}

@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="zip_code_hint">Zip code</string>
+    <string name="city_name_hint">City name</string>
+    <string name="unknown_error_message">Unknown error</string>
+    <string name="not_found_error_message">Weather info not found</string>
+    <string name="bad_input_error_message">The field was empty or containing not valid characters</string>
+    <string name="error_dialog_header">Error</string>
+
+    <string name="max_temp_label">Highest temperature</string>
+    <string name="max_humidity_label">Highest humidity</string>
+    <string name="max_raining_label">Max raining</string>
+    <string name="max_wind_speed_label">Highest wind speed</string>
+
+    <string name="max_temp_value">%1$s: %2$s°C</string>
+    <string name="max_humidity_value">%1$s: %2$s</string>
+    <string name="max_raining_value">%1$s: %2$smm</string>
+    <string name="max_wind_speed_value">%1$s: %2$sm/s</string>
+
+    <string name="origin_point_label">Center (Origin)</string>
+    <string name="north_point_label">North</string>
+    <string name="south_point_label">South</string>
+    <string name="east_point_label">East</string>
+    <string name="west_point_label">West</string>
+</resources>
