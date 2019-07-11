@@ -27,36 +27,36 @@ My case is probably the most strange part of the code for Kotlin newcomers: What
 * Switch to the IO thread dispatcher, and execute the first repository call, handling the error
 ~~~
 withContext(io) {
-Try { repo.fetchWeather(weatherRequest) }.toEither { t -> DomainError(t) }
+    Try { repo.fetchWeather(weatherRequest) }.toEither { t -> DomainError(t) }
 ~~~
 * Map the right side of the either from the weather to the list of new coords
 ~~~
 .flatMap { originWeather ->
-Try {
-CoordCalculator.getAllCoords(
-Coord(
-lat = originWeather.coord.lat,
-lon = originWeather.coord.lon
-)
+    Try {
+        CoordCalculator.getAllCoords(
+            Coord(
+                lat = originWeather.coord.lat,
+                lon = originWeather.coord.lon
+            )
 ~~~
 * Map the coords to it's Weather info by calling the repo again, and these calls are asynchronous between them
 ~~~
 ).map { geoPoint ->
-async {
-DomainWeatherPoint(
-geoPoint.point,
-repo.fetchWeather(
-WeatherRequest.CoordRequest(geoPoint.coord)
-)
-)
-}
+    async {
+        DomainWeatherPoint(
+            geoPoint.point,
+            repo.fetchWeather(
+                WeatherRequest.CoordRequest(geoPoint.coord)
+            )
+        )
+    }
 ~~~
 
 * Wait until all calls are done succesfully, and add the origin weather to the others. And finally just handle the error if some call failed
 ~~~
-}.map {
-it.await()
-} + DomainWeatherPoint(Point.ORIGIN, originWeather)
+    }.map {
+        it.await()
+    } + DomainWeatherPoint(Point.ORIGIN, originWeather)
 }.toEither { t -> DomainError(t) }
 ~~~
 
