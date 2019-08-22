@@ -1,0 +1,55 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
+    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
+    //kotlin coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
+
+    //koin
+    implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
+
+    //Arrow
+    implementation "org.koin:koin-android:$rootProject.koinVersion"
+    implementation "io.arrow-kt:arrow-core-data:$rootProject.arrow_version"
+    implementation "io.arrow-kt:arrow-core-extensions:$rootProject.arrow_version"
+    implementation "io.arrow-kt:arrow-syntax:$rootProject.arrow_version"
+    implementation "io.arrow-kt:arrow-typeclasses:$rootProject.arrow_version"
+    implementation "io.arrow-kt:arrow-extras-data:$rootProject.arrow_version"
+    implementation "io.arrow-kt:arrow-extras-extensions:$rootProject.arrow_version"
+    kapt "io.arrow-kt:arrow-meta:$rootProject.arrow_version"
+
+}
+repositories {
+    mavenCentral()
+}

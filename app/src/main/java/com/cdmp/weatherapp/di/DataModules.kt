@@ -1,8 +1,8 @@
 package com.cdmp.weatherapp.di
 
+import com.cdmp.data.repository.WeatherRepo
 import com.cdmp.weatherapp.BuildConfig
 import com.cdmp.weatherapp.data.WeatherApi
-import com.cdmp.weatherapp.data.repository.WeatherRepo
 import com.cdmp.weatherapp.data.service.WeatherService
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
@@ -32,12 +32,6 @@ object DataModules {
     val apiModule = module {
         single {
             WeatherApi(get(), BuildConfig.ApiKey)
-        }
-    }
-
-    val repoModule = module {
-        single {
-            WeatherRepo(get())
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.cdmp.weatherapp.di
 
-import com.cdmp.weatherapp.presentation.MainViewModel
+import com.cdmp.presentation.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
