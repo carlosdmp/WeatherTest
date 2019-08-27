@@ -5,6 +5,7 @@ import com.cdmp.weatherapp.BuildConfig
 import com.cdmp.weatherapp.data.WeatherApi
 import com.cdmp.weatherapp.data.service.WeatherService
 import okhttp3.OkHttpClient
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -32,6 +33,12 @@ object DataModules {
     val apiModule = module {
         single {
             WeatherApi(get(), BuildConfig.ApiKey)
+        }
+    }
+
+    val repoModule = module {
+        single(named("real")) {
+            WeatherRepo(get())
         }
     }
 }
