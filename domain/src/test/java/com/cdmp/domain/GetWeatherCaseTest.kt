@@ -1,22 +1,23 @@
-package com.cdmp.weatherapp.domain
+package com.cdmp.domain
 
-import arrow.core.Left
-import arrow.core.Right
-import com.cdmp.weatherapp.data.repository.WeatherRepo
-import com.cdmp.weatherapp.domain.case.GetWeatherCase
-import com.cdmp.weatherapp.domain.model.*
+import com.cdmp.domain.case.GetWeatherCase
+import com.cdmp.domain.datatypes.bimap
+import com.cdmp.domain.datatypes.left
+import com.cdmp.domain.datatypes.map
+import com.cdmp.domain.datatypes.right
+import com.cdmp.domain.model.*
+import com.cdmp.domain.repository.WeatherRepoContract
 import io.mockk.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
 class GetWeatherCaseTest {
 
-    private val repo: WeatherRepo = mockk()
+    private val repo: WeatherRepoContract = mockk()
 
     private val case = GetWeatherCase(repo, Dispatchers.Unconfined)
 
@@ -56,9 +57,8 @@ class GetWeatherCaseTest {
             repo.fetchWeather(any<WeatherRequest.CoordRequest>())
         }
 
-        assertTrue(result.isRight())
-        assertEquals(Right(2), result.map { it.size })
-        assertEquals(Right(DomainWeatherPoint(Point.NORTH, secondResult)), result.map { it[0] })
+        assertEquals(right(2), result.map { it.size })
+        assertEquals(right(DomainWeatherPoint(Point.NORTH, secondResult)), result.map { it[0] })
         confirmVerified(repo)
     }
 
@@ -77,8 +77,7 @@ class GetWeatherCaseTest {
             repo.fetchWeather(firstRequest)
         }
 
-        assertTrue(result.isLeft())
-        assertEquals(Left(error), result.mapLeft { it.cause })
+        assertEquals(left(error), result.bimap({ it }, { it.cause }))
         confirmVerified(repo)
     }
 }

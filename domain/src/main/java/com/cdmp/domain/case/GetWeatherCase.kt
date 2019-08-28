@@ -2,6 +2,7 @@ package com.cdmp.domain.case
 
 import com.cdmp.domain.CoordCalculator
 import com.cdmp.domain.datatypes.Either
+import com.cdmp.domain.datatypes.bimap
 import com.cdmp.domain.datatypes.flatMap
 import com.cdmp.domain.datatypes.safeCall
 import com.cdmp.domain.model.*
@@ -13,7 +14,7 @@ import kotlinx.coroutines.withContext
 
 class GetWeatherCase(private val repo: WeatherRepoContract, private val io: CoroutineDispatcher) {
 
-    suspend fun getWeather(weatherRequest: WeatherRequest): Either<Throwable, List<DomainWeatherPoint>> =
+    suspend fun getWeather(weatherRequest: WeatherRequest): Either<DomainError, List<DomainWeatherPoint>> =
         withContext(io) {
             //First call to get the weather, and handle the possible error
             safeCall { repo.fetchWeather(weatherRequest) }
@@ -39,5 +40,5 @@ class GetWeatherCase(private val repo: WeatherRepoContract, private val io: Coro
                     }
                     //And finally I add the initial item, and map the possible error to a domain model
                 }
-        }
+        }.bimap({ it }, { DomainError(it) })
 }

@@ -1,18 +1,16 @@
-package com.cdmp.weatherapp.data
+package com.cdmp.data
 
-import com.cdmp.weatherapp.data.model.WeatherEntity
-import com.cdmp.weatherapp.data.model.WeatherRequestEntity
+import com.cdmp.data.model.WeatherEntity
+import com.cdmp.data.model.WeatherRequestEntity
+import com.cdmp.weatherapp.data.WeatherApi
 import com.cdmp.weatherapp.data.service.WeatherService
 import io.mockk.coEvery
 import io.mockk.coVerifyOrder
 import io.mockk.confirmVerified
 import io.mockk.mockk
+import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class WeatherApiTest {
 

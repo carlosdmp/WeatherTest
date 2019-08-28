@@ -49,6 +49,13 @@ dependencies {
     implementation "io.arrow-kt:arrow-extras-extensions:$rootProject.arrow_version"
     kapt "io.arrow-kt:arrow-meta:$rootProject.arrow_version"
 
+    //unit testing
+    testImplementation 'junit:junit:4.12'
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation group: 'androidx.arch.core', name: 'core-testing', version: '2.0.1'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesVersion"
 }
 repositories {
     mavenCentral()

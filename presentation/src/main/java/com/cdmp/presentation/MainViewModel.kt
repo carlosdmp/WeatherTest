@@ -32,7 +32,7 @@ class MainViewModel(
                 {
                     WeatherDisplayMapper.transform(it)
                 }, {
-                    ErrorDisplayMapper.transform(DomainError(it))
+                    ErrorDisplayMapper.transform(it)
                 }
             ))
             isLoading.postValue(false)

@@ -1,4 +1,4 @@
-package com.cdmp.weatherapp
+package com.cdmp.domain
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
