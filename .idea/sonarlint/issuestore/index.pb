@@ -81,3 +81,5 @@ j
 :data/src/main/java/com/cdmp/data/repository/WeatherRepo.kt,2/5/259b4475218d5d00ce8b4495a61118ec2c53f978
 k
 ;domain/src/main/java/com/cdmp/domain/case/GetWeatherCase.kt,c/a/cafbd01049e53c14aebecacf54474c266544e453
+h
+8domain/src/main/java/com/cdmp/domain/datatypes/Either.kt,0/e/0e025f0434be38bfa70d1cf6e2d15bd78665915d

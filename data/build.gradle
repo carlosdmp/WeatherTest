@@ -39,8 +39,10 @@ dependencies {
     //koin
     implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
 
-    //Arrow
+    //Koin
     implementation "org.koin:koin-android:$rootProject.koinVersion"
+
+    //Arrow
     implementation "io.arrow-kt:arrow-core-data:$rootProject.arrow_version"
     implementation "io.arrow-kt:arrow-core-extensions:$rootProject.arrow_version"
     implementation "io.arrow-kt:arrow-syntax:$rootProject.arrow_version"

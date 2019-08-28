@@ -1,25 +1,24 @@
 package com.cdmp.domain.case
 
-import arrow.core.Either
-import arrow.core.Try
-import arrow.core.flatMap
 import com.cdmp.domain.CoordCalculator
+import com.cdmp.domain.datatypes.Either
+import com.cdmp.domain.datatypes.flatMap
+import com.cdmp.domain.datatypes.safeCall
 import com.cdmp.domain.model.*
 import com.cdmp.domain.repository.WeatherRepoContract
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
-
-typealias WeatherResult = Either<DomainError, List<DomainWeatherPoint>>
 
 class GetWeatherCase(private val repo: WeatherRepoContract, private val io: CoroutineDispatcher) {
 
-    suspend fun getWeather(weatherRequest: WeatherRequest): WeatherResult =
+    suspend fun getWeather(weatherRequest: WeatherRequest): Either<Throwable, List<DomainWeatherPoint>> =
         withContext(io) {
             //First call to get the weather, and handle the possible error
-            Try { repo.fetchWeather(weatherRequest) }.toEither { t -> DomainError(t) }
+            safeCall { repo.fetchWeather(weatherRequest) }
                 .flatMap { originWeather ->
-                    Try {
+                    safeCall {
                         //Get the 4 other zones
                         CoordCalculator.getAllCoords(
                             Coord(
@@ -36,12 +35,9 @@ class GetWeatherCase(private val repo: WeatherRepoContract, private val io: Coro
                                     )
                                 )
                             }
-                        }.map {
-                            //I map the deferred list to the actual items list, by waiting since they are all completed
-                            it.await()
-                        } + DomainWeatherPoint(Point.ORIGIN, originWeather)
-                        //And finally I add the initial item, and map the possible error to a domain model
-                    }.toEither { t -> DomainError(t) }
+                        }.awaitAll() + DomainWeatherPoint(Point.ORIGIN, originWeather)
+                    }
+                    //And finally I add the initial item, and map the possible error to a domain model
                 }
         }
 }

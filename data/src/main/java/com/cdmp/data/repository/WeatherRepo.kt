@@ -3,7 +3,6 @@ package com.cdmp.data.repository
 import androidx.annotation.WorkerThread
 import com.cdmp.data.mapper.WeatherDomainMapper
 import com.cdmp.data.mapper.WeatherRequestMapper
-import com.cdmp.domain.model.DomainWeather
 import com.cdmp.domain.model.WeatherRequest
 import com.cdmp.domain.repository.WeatherRepoContract
 import com.cdmp.weatherapp.data.WeatherApi

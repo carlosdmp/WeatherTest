@@ -17,7 +17,6 @@ import com.cdmp.domain.model.Point
 import com.cdmp.domain.model.WeatherRequest
 import com.cdmp.presentation.model.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.cdmp.presentation.databinding.FragmentMainBinding
 
 
 class MainFragment : Fragment() {
