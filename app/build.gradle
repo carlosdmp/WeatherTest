@@ -1,10 +1,9 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'kotlin-kapt'
+def dep = rootProject.ext
 
 android {
     compileSdkVersion 28
@@ -35,51 +34,28 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':data')
-    implementation project(path: ':domain')
-    implementation project(path: ':presentation')
+    implementation project(path: "$dep.modules.presentation")
+    implementation project(path: "$dep.modules.domain")
+    implementation project(path: "$dep.modules.data")
 
-    //android
-    implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.viewmodelVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
-    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
-    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
-    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
-    implementation "com.google.android.material:material:$rootProject.materialVersion"
-    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+    implementation "$dep.android.appCompat"
+    implementation "$dep.android.viewmodelKtx"
+    implementation "$dep.android.constraints"
+    implementation "$dep.android.lifecycleExt"
+    kapt "$dep.android.lifecycleKapt"
+    implementation "$dep.android.recyclerView"
+    implementation "$dep.android.material"
 
-    //kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
-    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
-    //kotlin coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
+    implementation "$dep.kotlinCore.stdLib"
+    implementation "$dep.kotlinCore.ktx"
 
-    //koin
-    implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
+    implementation "$dep.coroutines.core"
+    implementation "$dep.coroutines.android"
 
-    //Arrow
-    implementation "org.koin:koin-android:$rootProject.koinVersion"
-    implementation "io.arrow-kt:arrow-core-data:$rootProject.arrow_version"
-    implementation "io.arrow-kt:arrow-core-extensions:$rootProject.arrow_version"
-    implementation "io.arrow-kt:arrow-syntax:$rootProject.arrow_version"
-    implementation "io.arrow-kt:arrow-typeclasses:$rootProject.arrow_version"
-    implementation "io.arrow-kt:arrow-extras-data:$rootProject.arrow_version"
-    implementation "io.arrow-kt:arrow-extras-extensions:$rootProject.arrow_version"
-    kapt "io.arrow-kt:arrow-meta:$rootProject.arrow_version"
+    implementation "$dep.koin.core"
+    implementation "$dep.koin.viewmodel"
 
-    //http
-    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
-
-
-    //unit testing
-    testImplementation 'junit:junit:4.12'
-    testImplementation "io.mockk:mockk:$mockk_version"
-    testImplementation group: 'androidx.arch.core', name: 'core-testing', version: '2.0.1'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesVersion"
+    implementation "$dep.network.core"
+    implementation "$dep.network.converter"
+    implementation "$dep.network.gson"
 }

@@ -1,7 +1,9 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+
+def dep = rootProject.ext
 
 android {
     compileSdkVersion 28
@@ -29,33 +31,23 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    //kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
-    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
-    //kotlin coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
+    implementation "$dep.kotlinCore.stdLib"
+    implementation "$dep.kotlinCore.ktx"
 
-    //koin
-    implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
+    implementation "$dep.coroutines.core"
+    implementation "$dep.coroutines.android"
 
-    //Arrow
-    implementation "org.koin:koin-android:$rootProject.koinVersion"
-    implementation "io.arrow-kt:arrow-core-data:$rootProject.arrow_version"
-    implementation "io.arrow-kt:arrow-core-extensions:$rootProject.arrow_version"
-    implementation "io.arrow-kt:arrow-syntax:$rootProject.arrow_version"
-    implementation "io.arrow-kt:arrow-typeclasses:$rootProject.arrow_version"
-    implementation "io.arrow-kt:arrow-extras-data:$rootProject.arrow_version"
-    implementation "io.arrow-kt:arrow-extras-extensions:$rootProject.arrow_version"
-    kapt "io.arrow-kt:arrow-meta:$rootProject.arrow_version"
+    implementation "$dep.network.core"
+    implementation "$dep.network.converter"
+    implementation "$dep.network.gson"
 
-    //unit testing
-    testImplementation 'junit:junit:4.12'
-    testImplementation "io.mockk:mockk:$mockk_version"
-    testImplementation group: 'androidx.arch.core', name: 'core-testing', version: '2.0.1'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesVersion"
+    testImplementation "$dep.test.core"
+    testImplementation "$dep.test.junit"
+    testImplementation "$dep.test.mockk"
+    testImplementation "$dep.test.coroutines"
+
+    androidTestImplementation "$dep.androidTest.runner"
+    androidTestImplementation "$dep.androidTest.rules"
 }
 repositories {
     mavenCentral()
